@@ -1,5 +1,6 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
+const ttsFile = './tts.txt';
 
 const client = new tmi.Client({
 	channels: ['teklynk']
@@ -12,6 +13,6 @@ client.on('message', (channel, tags, message, self) => {
 	    console.log(`${tags['display-name']}: ${message}`);
         message = message.substring(4);
         message = message.trim();
-        fs.writeFileSync('./tts.txt', message);
+        fs.writeFileSync(ttsFile, message);
     }
 });

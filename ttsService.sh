@@ -26,6 +26,10 @@ do
     # apt install gnustep-gui-runtime
     #say -f "$filename"
 
+    # Option 3
+    # apt install espeak
+    #espeak -p 30 -s 100 -v en-french+15 "$textValue"
+
     # clear tts.txt file after reading the text
     truncate -s 0 "$filename"
 
@@ -35,6 +39,3 @@ do
   fi
 
 done
-
-# You may need to manually kill this process/script with: 
-# pkill -9 -f ttsService.sh

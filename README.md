@@ -1,24 +1,23 @@
 # twitch_tts_linux
-Uses spd-say and tmi.js to speak a chat message with !tts hello, this is my message
+Uses node, espeak and tmi.js to speak a chat message with: !tts hello, this is my message
 
 
 Requires node.js
 
-Tested on Linux Mint with spd-say.
+Tested on Linux Mint with spd-say and espeak.
 
 
 # Setup Instructions:
 
 Open index.js and set 
 ```javascript
-const client = new tmi.Client({
-	channels: ['yourtwitchchannel']
-});
+// Settings
+const processName = 'espeak';
+const speechCommand = 'espeak -p 30 -s 100 -v en-french+15';
+const modsOnly = false;
+const channelName = 'yourtwitchchannel';
+const ttsCommand = '!tts';
 ```
 npm install
 
-Start the script with ./run.sh in the terminal.
-
-You may need to manually kill this process/script with: 
-
-pkill -9 -f ttsService.sh
+Start the script with npm run start OR node index.js

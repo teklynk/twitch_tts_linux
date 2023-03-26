@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 
 // Settings
 const processName = 'espeak';
-const speechCommand = 'espeak -p 30 -s 100 -v en-french+15';
+const speechCommand = 'espeak -p 30 -s 150 -v en-french+15';
 const modsOnly = false;
 const channelName = 'teklynk';
 const ttsCommand = '!tts';
@@ -22,6 +22,10 @@ client.on('message', (channel, user, message, self) => {
     }
 
     if (user['message-type'] === 'chat' && message.startsWith(ttsCommand + ' ')) {
+
+        // Escape apostrophes and single quotes 
+        message = message.replace(/'/g, 'A');
+
         isRunning(processName, (proc_status) => {
             // If speech process is not currently running
             if (!proc_status) {

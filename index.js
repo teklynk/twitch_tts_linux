@@ -2,7 +2,6 @@ const tmi = require('tmi.js');
 const execSync = require('child_process').execSync;
 
 // Settings
-const processName = 'espeak';
 const speechCommand = 'espeak -p 25 -s 125 -v en-french+15';
 const modsOnly = true;
 const channelName = 'teklynk';

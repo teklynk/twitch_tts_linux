@@ -1,10 +1,10 @@
 const tmi = require('tmi.js');
-const { exec } = require('child_process');
+const execSync = require('child_process').execSync;
 
 // Settings
 const processName = 'espeak';
-const speechCommand = 'espeak -p 30 -s 150 -v en-french+15';
-const modsOnly = false;
+const speechCommand = 'espeak -p 25 -s 125 -v en-french+15';
+const modsOnly = true;
 const channelName = 'teklynk';
 const ttsCommand = '!tts';
 
@@ -26,28 +26,17 @@ client.on('message', (channel, user, message, self) => {
         // Escape apostrophes and single quotes 
         message = message.replace(/'/g, 'A');
 
-        isRunning(processName, (proc_status) => {
-            // If speech process is not currently running
-            if (!proc_status) {
-                if (modsOnly && (user.mod || user.username.toLowerCase() === channelName.toLowerCase().trim())) {
+        // Synchronously execute the speechCommand. This acts like a queue/buffer. 
+        if (modsOnly && (user.mod || user.username.toLowerCase() === channelName.toLowerCase().trim())) {
 
-                    exec(speechCommand + " '" + message.substring(ttsCommand.length).trim() + "'");
+            execSync(speechCommand + " '" + message.substring(ttsCommand.length).trim() + "'");
 
-                } else if (!modsOnly || user.username.toLowerCase() === channelName.toLowerCase().trim()) {
+        } else if (!modsOnly || user.username.toLowerCase() === channelName.toLowerCase().trim()) {
 
-                    exec(speechCommand + " '" + message.substring(ttsCommand.length).trim() + "'");
+            execSync(speechCommand + " '" + message.substring(ttsCommand.length).trim() + "'");
 
-                }
-            }
-        })
+        }
+
     }
 
 });
-
-// checks process status
-const isRunning = (query, cb) => {
-    let cmd = `ps -A`;
-    exec(cmd, (err, stdout, stderr) => {
-        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-    });
-}
